@@ -3,15 +3,15 @@ from urllib.request import urlopen
 
 
 class Parser: 
-	url = None
+	aqi_url = None
 	site_name_list = []
 	site_data_list = []
 
-	def init(self, url):
-		self.url = url
+	def init(self, aqi_url):
+		self.aqi_url = aqi_url
 
-	def read(self): 		
-		response = urlopen(self.url)
+	def read_AQI(self): 		
+		response = urlopen(self.aqi_url)
 		raw_data = json.loads(response.read())
 		for record in raw_data['result']['records']:
 			self.site_name_list.append(record['SiteName'])
