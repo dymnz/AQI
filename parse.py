@@ -1,4 +1,5 @@
 import json
+from util import *
 from urllib.request import urlopen
 
 
@@ -16,10 +17,16 @@ class Parser:
 		for record in raw_data['result']['records']:
 			self.site_name_list.append(record['SiteName'])
 			self.site_data_list.append(record)
+		logging.info('AQI read done: {}'.format(self.aqi_url))
 
 	def get_city(self, site_name):
-		site_index = self.site_name_list.index(site_name)
-		return self.site_data_list[site_index]
+		try:
+			site_index = self.site_name_list.index(site_name)
+			return self.site_data_list[site_index]
+		except ValueError:
+			logging.error('Error site_name {} not found!'.format(site_name))
+			raise
+		
 
 
 
