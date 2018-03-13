@@ -14,7 +14,7 @@ class Parser:
 	def read_AQI(self): 		
 		response = urlopen(self.aqi_url)
 		raw_data = json.loads(response.read())
-		for record in raw_data['result']['records']:
+		for record in raw_data:
 			self.site_name_list.append(record['SiteName'])
 			self.site_data_list.append(record)
 		logging.info('AQI read done: {}'.format(self.aqi_url))

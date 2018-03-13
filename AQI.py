@@ -21,8 +21,9 @@ with open('credential.json') as credential_json:
 
 
 parser = Parser()
-#parser.init('https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000259?sort=SiteName&offset=0&limit=1000')
+parser.init('http://opendata2.epa.gov.tw/AQI.json')
 parser.read_AQI()
+
 
 try: 
 	data = parser.get_city('新竹')
@@ -38,7 +39,22 @@ def job():
 			if current_time == str(scheduled_time):
 				logging.info('scheduled job for {} @ {}'.format(request['site_name'], scheduled_time))
 
-schedule.every(0.01).minutes.do(job)
+
+def sc(site_name):
+	try: 
+		data = parser.get_city(site_name)
+		print(data)
+	except:
+		print('except')
+
+scheduled_job_list = []
+for request in setting['requests']:
+	for scheduled_time in request['time']:
+		scheduled_job_list.append((scheduled_time, request['site_name']))
+
+
+for scheduled_job in scheduled_job_list:
+	schedule.every().day.at(scheduled_job[0]).do(sc, scheduled_job[1])
 
 while True:
 	schedule.run_pending()
