@@ -37,8 +37,8 @@ parser.init('http://opendata2.epa.gov.tw/AQI.json')
 
 notification = Notification()
 notification.init(credential)
+notification.send_pushed('AQI system initializing...')
 
-# send_pushed_notification(credential['pushed'], '☁ asdasds')
 
 def check_and_notify(site_name):
 	try: 
@@ -51,7 +51,7 @@ def check_and_notify(site_name):
 
 		logging.debug('[Debug] Scaled AQI for {}: {}'.format(site_name, scaled_AQI))
 
-		notification.send_pushed(site_name + ':' + '🔥' * scaled_AQI)
+		notification.send_pushed(site_name + ':'+ data['AQI'] + ':' +'🔥' * scaled_AQI)
 
 
 	except ValueError as error:
