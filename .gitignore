@@ -1,0 +1,6 @@
+example.txt
+credential.json
+setting.json
+log.txt
+*.pyc
+__*
