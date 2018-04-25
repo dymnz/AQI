@@ -16,7 +16,7 @@ class Parser:
 		self.site_data_list = []
 
 		response = urlopen(self.aqi_url)
-		raw_data = json.loads(response.read())
+		raw_data = json.loads(response.read().decode('utf-8'))
 		for record in raw_data:
 			self.site_name_list.append(record['SiteName'])
 			self.site_data_list.append(record)
